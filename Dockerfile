@@ -1,7 +1,10 @@
 FROM ahmettoguz/postgresql-client
 
-WORKDIR /ahmet
+WORKDIR /app
 
-COPY ./init.sql .
+COPY ./bank.sql .
+COPY ./staucktion.sql .
 
-CMD /usr/bin/psql -U "$USERNAME" -d "$DATABASE" -h "$HOST" -f /ahmet/init.sql
+CMD /bin/sh -c "\
+  /usr/bin/psql -U \"$USERNAME\" -d \"$DATABASE\" -h \"$HOST\" -f /app/bank.sql && \
+  /usr/bin/psql -U \"$USERNAME\" -d \"$DATABASE\" -h \"$HOST\" -f /app/staucktion.sql"
