@@ -689,7 +689,7 @@ ALTER TABLE ONLY public.user_role
 --
 
 ALTER TABLE ONLY public.photo
-    ADD CONSTRAINT photo_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) NOT VALID;
+    ADD CONSTRAINT photo_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE SET NULL NOT VALID;
 
 
 --
@@ -698,7 +698,7 @@ ALTER TABLE ONLY public.photo
 --
 
 ALTER TABLE ONLY public.photo
-    ADD CONSTRAINT photo_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id) NOT VALID;
+    ADD CONSTRAINT photo_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id) ON DELETE SET NULL NOT VALID;
 
 
 --
@@ -707,7 +707,7 @@ ALTER TABLE ONLY public.photo
 --
 
 ALTER TABLE ONLY public.photo
-    ADD CONSTRAINT photo_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) NOT VALID;
+    ADD CONSTRAINT photo_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
 
 
 --
@@ -716,7 +716,7 @@ ALTER TABLE ONLY public.photo
 --
 
 ALTER TABLE ONLY public.photo
-    ADD CONSTRAINT photo_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) NOT VALID;
+    ADD CONSTRAINT photo_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
 
 
 --
@@ -725,7 +725,7 @@ ALTER TABLE ONLY public.photo
 --
 
 ALTER TABLE ONLY public."user"
-    ADD CONSTRAINT user_id_fkey FOREIGN KEY (id) REFERENCES public.user_role(id) NOT VALID;
+    ADD CONSTRAINT user_id_fkey FOREIGN KEY (id) REFERENCES public.user_role(id) ON DELETE SET NULL NOT VALID;
 
 
 -- Completed on 2025-01-16 17:04:05 UTC
