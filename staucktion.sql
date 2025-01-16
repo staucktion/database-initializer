@@ -46,9 +46,13 @@ SET default_table_access_method = heap;
 CREATE TABLE public.category (
     id bigint NOT NULL,
     name character varying(100) NOT NULL,
+    status_id integer NOT NULL,
     address character varying(255) NOT NULL,
     location_id bigint NOT NULL,
-    valid_radius numeric(10,2) NOT NULL
+    valid_radius numeric(10,2) NOT NULL,
+    is_deleted boolean NOT NULL,
+    created_at time without time zone NOT NULL,
+    updated_at time without time zone NOT NULL
 );
 
 
@@ -275,7 +279,7 @@ ALTER TABLE ONLY public."user" ALTER COLUMN role_id SET DEFAULT nextval('public.
 ALTER TABLE ONLY public.user_role ALTER COLUMN id SET DEFAULT nextval('public.user_role_id_seq1'::regclass);
 
 
-COPY public.category (id, name, address, location_id, valid_radius) FROM stdin;
+COPY public.category (id, name, status_id, address, location_id, valid_radius, is_deleted, created_at, updated_at) FROM stdin;
 \.
 
 
@@ -368,6 +372,9 @@ ALTER TABLE ONLY public.photo
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id) ON DELETE SET NULL NOT VALID;
 
+
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
 
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
