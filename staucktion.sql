@@ -49,10 +49,10 @@ CREATE TABLE public.category (
     status_id integer NOT NULL,
     address character varying(255) NOT NULL,
     location_id bigint NOT NULL,
-    valid_radius numeric(10,2) NOT NULL,
+    valid_radius numeric(10,1) NOT NULL,
     is_deleted boolean NOT NULL,
-    created_at time without time zone NOT NULL,
-    updated_at time without time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -103,8 +103,8 @@ CREATE TABLE public.photo (
     status_message character varying(255) NOT NULL,
     device_info character varying(255) NOT NULL,
     is_deleted boolean NOT NULL,
-    created_at time without time zone NOT NULL,
-    updated_at time without time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -280,26 +280,45 @@ ALTER TABLE ONLY public.user_role ALTER COLUMN id SET DEFAULT nextval('public.us
 
 
 COPY public.category (id, name, status_id, address, location_id, valid_radius, is_deleted, created_at, updated_at) FROM stdin;
+1	Düden Şelalesi	2	Turkey, Antalya, Düden Park	1	10	false	2025-01-16 10:00:00	2025-01-16 10:00:00
+2	Kız Kulesi	2	Turkey, Istanbul, Bosphorus	2	10	false	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
 COPY public.location (id, latitude, longitude) FROM stdin;
+1	36.9097	30.7375
+2	41.0084	29.0290
+3	41.0085	29.0291
+4	41.0085	29.0291
 \.
 
 
 COPY public.photo (id, title, user_id, location_id, category_id, status_id, status_message, device_info, is_deleted, created_at, updated_at) FROM stdin;
+1	Awesome Düden	2	3	1	2	Photo approved for Düden location	Samsung S6	false	2025-01-16 11:00:00	2025-01-16 11:00:00
+2	Beautiful Sunset at Düden	2	4	1	2	Photo approved for Düden location	Samsung S6	false	2025-01-16 12:00:00	2025-01-16 12:00:00
 \.
 
 
 COPY public.status (id, status) FROM stdin;
+1	Waiting
+2	Approved
+3	Disapproved
 \.
 
 
 COPY public."user" (id, username, email, password, first_name, last_name, role_id, is_deleted, created_at, updated_at) FROM stdin;
+1	admin_user	admin@gmail.com	secret	Admin	Admin	1	false	2025-01-16 09:00:00	2025-01-16 09:00:00
+2	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	false	2025-01-16 09:30:00	2025-01-16 09:30:00
+3	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	false	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	false	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
 COPY public.user_role (id, role) FROM stdin;
+1	Admin
+2	Photographer
+3	Company
+4	Validator
 \.
 
 
