@@ -11,3 +11,11 @@
 - Place `init.sql` file for database structure and data.
 
 - Launch database initializer. Check [`docker-config`](https://github.com/staucktion/docker-config) repository.
+
+<h2 id="clean-sql">Clean Sql</h2>
+
+replace following regex with empty string
+
+```
+^--.*\n{1,}
+```

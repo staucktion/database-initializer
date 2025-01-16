@@ -1,12 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 17.2 (Debian 17.2-1.pgdg120+1)
--- Dumped by pg_dump version 17.2
-
--- Started on 2024-12-19 09:45:53 UTC
-
 DO $$ 
 BEGIN
     PERFORM pg_terminate_backend(pg_stat_activity.pid)
@@ -28,11 +19,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 DROP DATABASE IF EXISTS bank;
---
--- TOC entry 3406 (class 1262 OID 16855)
--- Name: bank; Type: DATABASE; Schema: -; Owner: admin
---
-
 CREATE DATABASE bank WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
 
 
@@ -56,11 +42,6 @@ SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
---
--- TOC entry 217 (class 1259 OID 16856)
--- Name: account; Type: TABLE; Schema: public; Owner: admin
---
-
 CREATE TABLE public.account (
     id integer NOT NULL,
     balance numeric(15,2) NOT NULL,
@@ -71,11 +52,6 @@ CREATE TABLE public.account (
 
 
 ALTER TABLE public.account OWNER TO admin;
-
---
--- TOC entry 218 (class 1259 OID 16862)
--- Name: account_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
---
 
 CREATE SEQUENCE public.account_id_seq
     AS integer
@@ -88,19 +64,8 @@ CREATE SEQUENCE public.account_id_seq
 
 ALTER SEQUENCE public.account_id_seq OWNER TO admin;
 
---
--- TOC entry 3407 (class 0 OID 0)
--- Dependencies: 218
--- Name: account_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
---
-
 ALTER SEQUENCE public.account_id_seq OWNED BY public.account.id;
 
-
---
--- TOC entry 219 (class 1259 OID 16863)
--- Name: auditlog; Type: TABLE; Schema: public; Owner: admin
---
 
 CREATE TABLE public.auditlog (
     id integer NOT NULL,
@@ -110,11 +75,6 @@ CREATE TABLE public.auditlog (
 
 
 ALTER TABLE public.auditlog OWNER TO admin;
-
---
--- TOC entry 220 (class 1259 OID 16867)
--- Name: auditlog_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
---
 
 CREATE SEQUENCE public.auditlog_id_seq
     AS integer
@@ -127,19 +87,8 @@ CREATE SEQUENCE public.auditlog_id_seq
 
 ALTER SEQUENCE public.auditlog_id_seq OWNER TO admin;
 
---
--- TOC entry 3408 (class 0 OID 0)
--- Dependencies: 220
--- Name: auditlog_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
---
-
 ALTER SEQUENCE public.auditlog_id_seq OWNED BY public.auditlog.id;
 
-
---
--- TOC entry 221 (class 1259 OID 16868)
--- Name: card; Type: TABLE; Schema: public; Owner: admin
---
 
 CREATE TABLE public.card (
     id integer NOT NULL,
@@ -152,11 +101,6 @@ CREATE TABLE public.card (
 
 ALTER TABLE public.card OWNER TO admin;
 
---
--- TOC entry 222 (class 1259 OID 16871)
--- Name: card_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
---
-
 CREATE SEQUENCE public.card_id_seq
     AS integer
     START WITH 1
@@ -168,19 +112,8 @@ CREATE SEQUENCE public.card_id_seq
 
 ALTER SEQUENCE public.card_id_seq OWNER TO admin;
 
---
--- TOC entry 3409 (class 0 OID 0)
--- Dependencies: 222
--- Name: card_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
---
-
 ALTER SEQUENCE public.card_id_seq OWNED BY public.card.id;
 
-
---
--- TOC entry 223 (class 1259 OID 16872)
--- Name: transaction; Type: TABLE; Schema: public; Owner: admin
---
 
 CREATE TABLE public.transaction (
     id integer NOT NULL,
@@ -195,11 +128,6 @@ CREATE TABLE public.transaction (
 
 ALTER TABLE public.transaction OWNER TO admin;
 
---
--- TOC entry 224 (class 1259 OID 16876)
--- Name: transaction_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
---
-
 CREATE SEQUENCE public.transaction_id_seq
     AS integer
     START WITH 1
@@ -211,52 +139,20 @@ CREATE SEQUENCE public.transaction_id_seq
 
 ALTER SEQUENCE public.transaction_id_seq OWNER TO admin;
 
---
--- TOC entry 3410 (class 0 OID 0)
--- Dependencies: 224
--- Name: transaction_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
---
-
 ALTER SEQUENCE public.transaction_id_seq OWNED BY public.transaction.id;
 
-
---
--- TOC entry 3225 (class 2604 OID 16877)
--- Name: account id; Type: DEFAULT; Schema: public; Owner: admin
---
 
 ALTER TABLE ONLY public.account ALTER COLUMN id SET DEFAULT nextval('public.account_id_seq'::regclass);
 
 
---
--- TOC entry 3229 (class 2604 OID 16878)
--- Name: auditlog id; Type: DEFAULT; Schema: public; Owner: admin
---
-
 ALTER TABLE ONLY public.auditlog ALTER COLUMN id SET DEFAULT nextval('public.auditlog_id_seq'::regclass);
 
-
---
--- TOC entry 3231 (class 2604 OID 16879)
--- Name: card id; Type: DEFAULT; Schema: public; Owner: admin
---
 
 ALTER TABLE ONLY public.card ALTER COLUMN id SET DEFAULT nextval('public.card_id_seq'::regclass);
 
 
---
--- TOC entry 3232 (class 2604 OID 16880)
--- Name: transaction id; Type: DEFAULT; Schema: public; Owner: admin
---
-
 ALTER TABLE ONLY public.transaction ALTER COLUMN id SET DEFAULT nextval('public.transaction_id_seq'::regclass);
 
-
---
--- TOC entry 3393 (class 0 OID 16856)
--- Dependencies: 217
--- Data for Name: account; Type: TABLE DATA; Schema: public; Owner: admin
---
 
 COPY public.account (id, balance, provision, created_at, updated_at) FROM stdin;
 1	1000000.00	0.00	2024-12-18 18:44:29.679705	2024-12-18 18:44:29.679705
@@ -272,21 +168,9 @@ COPY public.account (id, balance, provision, created_at, updated_at) FROM stdin;
 \.
 
 
---
--- TOC entry 3395 (class 0 OID 16863)
--- Dependencies: 219
--- Data for Name: auditlog; Type: TABLE DATA; Schema: public; Owner: admin
---
-
 COPY public.auditlog (id, action, performed_at) FROM stdin;
 \.
 
-
---
--- TOC entry 3397 (class 0 OID 16868)
--- Dependencies: 221
--- Data for Name: card; Type: TABLE DATA; Schema: public; Owner: admin
---
 
 COPY public.card (id, account_id, number, expiration_date, cvv) FROM stdin;
 1	1	4242424242424242	12/25	123
@@ -304,136 +188,55 @@ COPY public.card (id, account_id, number, expiration_date, cvv) FROM stdin;
 \.
 
 
---
--- TOC entry 3399 (class 0 OID 16872)
--- Dependencies: 223
--- Data for Name: transaction; Type: TABLE DATA; Schema: public; Owner: admin
---
-
 COPY public.transaction (id, sender_account_id, receiver_account_id, sender_card_id, amount, transaction_date, description) FROM stdin;
 \.
 
 
---
--- TOC entry 3411 (class 0 OID 0)
--- Dependencies: 218
--- Name: account_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
---
-
 SELECT pg_catalog.setval('public.account_id_seq', 11, false);
 
-
---
--- TOC entry 3412 (class 0 OID 0)
--- Dependencies: 220
--- Name: auditlog_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
---
 
 SELECT pg_catalog.setval('public.auditlog_id_seq', 1, false);
 
 
---
--- TOC entry 3413 (class 0 OID 0)
--- Dependencies: 222
--- Name: card_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
---
-
 SELECT pg_catalog.setval('public.card_id_seq', 13, false);
 
 
---
--- TOC entry 3414 (class 0 OID 0)
--- Dependencies: 224
--- Name: transaction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
---
-
 SELECT pg_catalog.setval('public.transaction_id_seq', 1, false);
 
-
---
--- TOC entry 3235 (class 2606 OID 16882)
--- Name: account account_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
---
 
 ALTER TABLE ONLY public.account
     ADD CONSTRAINT account_pkey PRIMARY KEY (id);
 
 
---
--- TOC entry 3237 (class 2606 OID 16884)
--- Name: auditlog auditlog_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
---
-
 ALTER TABLE ONLY public.auditlog
     ADD CONSTRAINT auditlog_pkey PRIMARY KEY (id);
 
-
---
--- TOC entry 3239 (class 2606 OID 16886)
--- Name: card card_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
---
 
 ALTER TABLE ONLY public.card
     ADD CONSTRAINT card_pkey PRIMARY KEY (id);
 
 
---
--- TOC entry 3243 (class 2606 OID 16888)
--- Name: transaction transaction_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
---
-
 ALTER TABLE ONLY public.transaction
     ADD CONSTRAINT transaction_pkey PRIMARY KEY (id);
 
-
---
--- TOC entry 3241 (class 2606 OID 16890)
--- Name: card unique_card_number; Type: CONSTRAINT; Schema: public; Owner: admin
---
 
 ALTER TABLE ONLY public.card
     ADD CONSTRAINT unique_card_number UNIQUE (number);
 
 
---
--- TOC entry 3244 (class 2606 OID 16891)
--- Name: card card_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
-
 ALTER TABLE ONLY public.card
     ADD CONSTRAINT card_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.account(id) ON DELETE CASCADE NOT VALID;
 
-
---
--- TOC entry 3245 (class 2606 OID 16901)
--- Name: transaction transaction_receiver_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
 
 ALTER TABLE ONLY public.transaction
     ADD CONSTRAINT transaction_receiver_account_id_fkey FOREIGN KEY (receiver_account_id) REFERENCES public.account(id) ON DELETE SET NULL NOT VALID;
 
 
---
--- TOC entry 3246 (class 2606 OID 16896)
--- Name: transaction transaction_sender_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
-
 ALTER TABLE ONLY public.transaction
     ADD CONSTRAINT transaction_sender_account_id_fkey FOREIGN KEY (sender_account_id) REFERENCES public.account(id) ON DELETE SET NULL NOT VALID;
 
 
---
--- TOC entry 3247 (class 2606 OID 16906)
--- Name: transaction transaction_sender_card_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: admin
---
-
 ALTER TABLE ONLY public.transaction
     ADD CONSTRAINT transaction_sender_card_id_fkey FOREIGN KEY (sender_card_id) REFERENCES public.card(id) ON DELETE SET NULL NOT VALID;
 
-
--- Completed on 2024-12-19 10:12:11 UTC
-
---
--- PostgreSQL database dump complete
---
 
