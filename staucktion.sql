@@ -125,7 +125,7 @@ CREATE TABLE public.photo (
     file_path character varying(100),
     title character varying(100),
     user_id bigint NOT NULL,
-    auction_id bigint NOT NULL,
+    auction_id bigint,
     location_id bigint NOT NULL,
     category_id bigint NOT NULL,
     status_id integer NOT NULL,
