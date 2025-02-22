@@ -243,7 +243,7 @@ CREATE TABLE public."user" (
     password character varying(255) NOT NULL,
     first_name character varying(100) NOT NULL,
     last_name character varying(100) NOT NULL,
-    role_id integer,
+    role_id bigint,
     status_id integer,
     is_deleted boolean NOT NULL,
     created_at timestamp without time zone NOT NULL,
