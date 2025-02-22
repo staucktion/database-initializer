@@ -122,6 +122,7 @@ ALTER SEQUENCE public.location_id_seq OWNED BY public.location.id;
 
 CREATE TABLE public.photo (
     id bigint NOT NULL,
+    file_path character varying(100),
     title character varying(100),
     user_id bigint NOT NULL,
     auction_id bigint,
@@ -356,9 +357,7 @@ COPY public.location (id, latitude, longitude) FROM stdin;
 \.
 
 
-COPY public.photo (id, title, user_id, auction_id, location_id, category_id, status_id, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
-1	Awesome Düden	2	\N	3	1	2	Samsung S6	0	f	2025-01-16 11:00:00	2025-01-16 11:00:00
-2	Beautiful Sunset at Düden	2	\N	4	1	2	Samsung S6	0	f	2025-01-16 12:00:00	2025-01-16 12:00:00
+COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
 \.
 
 
