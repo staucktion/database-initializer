@@ -242,6 +242,7 @@ CREATE TABLE public."user" (
     first_name character varying(100) NOT NULL,
     last_name character varying(100) NOT NULL,
     role_id integer,
+    status_id integer,
     is_deleted boolean NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -372,14 +373,15 @@ COPY public.status (id, status) FROM stdin;
 6	finish
 7	sold
 8	banned
+9	active
 \.
 
 
-COPY public."user" (id, username, email, password, first_name, last_name, role_id, is_deleted, created_at, updated_at) FROM stdin;
-1	admin_user	admin@gmail.com	secret	Admin	Admin	1	f	2025-01-16 09:00:00	2025-01-16 09:00:00
-2	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	f	2025-01-16 09:30:00	2025-01-16 09:30:00
-3	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	f	2025-01-16 10:00:00	2025-01-16 10:00:00
-4	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+COPY public."user" (id, username, email, password, first_name, last_name, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
+1	admin_user	admin@gmail.com	secret	Admin	Admin	1	9	f	2025-01-16 09:00:00	2025-01-16 09:00:00
+2	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	9	f	2025-01-16 09:30:00	2025-01-16 09:30:00
+3	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	9	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	9	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
@@ -472,11 +474,18 @@ ALTER TABLE ONLY public.user_role
 
 
 ALTER TABLE ONLY public.auction
-    ADD CONSTRAINT auction_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id);
+    ADD CONSTRAINT auction_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.auction
+    ADD CONSTRAINT auction_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public.category
     ADD CONSTRAINT category_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public.photo
@@ -499,10 +508,11 @@ ALTER TABLE ONLY public.photo
 
 
 ALTER TABLE ONLY public.provision
-    ADD CONSTRAINT provision_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id);
+    ADD CONSTRAINT provision_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public."user"
-    ADD CONSTRAINT user_id_fkey FOREIGN KEY (id) REFERENCES public.user_role(id) ON DELETE SET NULL NOT VALID;
+    ADD CONSTRAINT user_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.user_role(id) ON DELETE SET NULL NOT VALID;
 
-
+ALTER TABLE ONLY public."user"
+    ADD CONSTRAINT user_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
