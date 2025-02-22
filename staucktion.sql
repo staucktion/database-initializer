@@ -40,8 +40,35 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 SET default_tablespace = '';
-
 SET default_table_access_method = heap;
+
+
+CREATE TABLE public.auction (
+    id bigint NOT NULL,
+    category_id bigint NOT NULL,
+    status_id integer NOT NULL,
+    start_time timestamp without time zone NOT NULL,
+    finish_time timestamp without time zone NOT NULL,
+    is_deleted boolean NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.auction OWNER TO admin;
+
+CREATE SEQUENCE public.auction_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.auction_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.auction_id_seq OWNED BY public.auction.id;
+
 
 CREATE TABLE public.category (
     id bigint NOT NULL,
@@ -97,11 +124,12 @@ CREATE TABLE public.photo (
     id bigint NOT NULL,
     title character varying(100),
     user_id bigint NOT NULL,
+    auction_id bigint,
     location_id bigint NOT NULL,
     category_id bigint NOT NULL,
     status_id integer NOT NULL,
-    status_message character varying(255) NOT NULL,
     device_info character varying(255) NOT NULL,
+    vote_count integer NOT NULL,
     is_deleted boolean NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -160,6 +188,28 @@ CREATE SEQUENCE public.photo_user_id_seq
 ALTER SEQUENCE public.photo_user_id_seq OWNER TO admin;
 
 ALTER SEQUENCE public.photo_user_id_seq OWNED BY public.photo.user_id;
+
+
+CREATE TABLE public.provision (
+    id bigint NOT NULL,
+    auction_id bigint,
+    provision_id_on_bank bigint
+);
+
+
+ALTER TABLE public.provision OWNER TO admin;
+
+CREATE SEQUENCE public.provision_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.provision_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.provision_id_seq OWNED BY public.provision.id;
 
 
 CREATE TABLE public.status (
@@ -249,6 +299,9 @@ ALTER SEQUENCE public.user_role_id_seq1 OWNER TO admin;
 ALTER SEQUENCE public.user_role_id_seq1 OWNED BY public.user_role.id;
 
 
+ALTER TABLE ONLY public.auction ALTER COLUMN id SET DEFAULT nextval('public.auction_id_seq'::regclass);
+
+
 ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
 
 
@@ -267,6 +320,9 @@ ALTER TABLE ONLY public.photo ALTER COLUMN location_id SET DEFAULT nextval('publ
 ALTER TABLE ONLY public.photo ALTER COLUMN category_id SET DEFAULT nextval('public.photo_category_id_seq'::regclass);
 
 
+ALTER TABLE ONLY public.provision ALTER COLUMN id SET DEFAULT nextval('public.provision_id_seq'::regclass);
+
+
 ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.status_id_seq'::regclass);
 
 
@@ -279,9 +335,13 @@ ALTER TABLE ONLY public."user" ALTER COLUMN role_id SET DEFAULT nextval('public.
 ALTER TABLE ONLY public.user_role ALTER COLUMN id SET DEFAULT nextval('public.user_role_id_seq1'::regclass);
 
 
+COPY public.auction (id, category_id, status_id, start_time, finish_time, is_deleted, created_at, updated_at) FROM stdin;
+\.
+
+
 COPY public.category (id, name, status_id, address, location_id, valid_radius, is_deleted, created_at, updated_at) FROM stdin;
-1	Düden Şelalesi	2	Turkey, Antalya, Düden Park	1	10	false	2025-01-16 10:00:00	2025-01-16 10:00:00
-2	Kız Kulesi	2	Turkey, Istanbul, Bosphorus	2	10	false	2025-01-16 10:30:00	2025-01-16 10:30:00
+1	Düden Şelalesi	2	Turkey, Antalya, Düden Park	1	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+2	Kız Kulesi	2	Turkey, Istanbul, Bosphorus	2	10.0	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
@@ -293,33 +353,45 @@ COPY public.location (id, latitude, longitude) FROM stdin;
 \.
 
 
-COPY public.photo (id, title, user_id, location_id, category_id, status_id, status_message, device_info, is_deleted, created_at, updated_at) FROM stdin;
-1	Awesome Düden	2	3	1	2	Photo approved for Düden location	Samsung S6	false	2025-01-16 11:00:00	2025-01-16 11:00:00
-2	Beautiful Sunset at Düden	2	4	1	2	Photo approved for Düden location	Samsung S6	false	2025-01-16 12:00:00	2025-01-16 12:00:00
+COPY public.photo (id, title, user_id, auction_id, location_id, category_id, status_id, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
+1	Awesome Düden	2	\N	3	1	2	Samsung S6	0	f	2025-01-16 11:00:00	2025-01-16 11:00:00
+2	Beautiful Sunset at Düden	2	\N	4	1	2	Samsung S6	0	f	2025-01-16 12:00:00	2025-01-16 12:00:00
+\.
+
+
+COPY public.provision (id, auction_id, provision_id_on_bank) FROM stdin;
 \.
 
 
 COPY public.status (id, status) FROM stdin;
-1	Waiting
-2	Approved
-3	Disapproved
+1	wait
+2	approve
+3	reject
+4	vote
+5	auction
+6	finish
+7	sold
+8	banned
 \.
 
 
 COPY public."user" (id, username, email, password, first_name, last_name, role_id, is_deleted, created_at, updated_at) FROM stdin;
-1	admin_user	admin@gmail.com	secret	Admin	Admin	1	false	2025-01-16 09:00:00	2025-01-16 09:00:00
-2	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	false	2025-01-16 09:30:00	2025-01-16 09:30:00
-3	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	false	2025-01-16 10:00:00	2025-01-16 10:00:00
-4	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	false	2025-01-16 10:30:00	2025-01-16 10:30:00
+1	admin_user	admin@gmail.com	secret	Admin	Admin	1	f	2025-01-16 09:00:00	2025-01-16 09:00:00
+2	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	f	2025-01-16 09:30:00	2025-01-16 09:30:00
+3	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
 COPY public.user_role (id, role) FROM stdin;
-1	Admin
-2	Photographer
-3	Company
-4	Validator
+1	admin
+2	photographer
+3	company
+4	validator
 \.
+
+
+SELECT pg_catalog.setval('public.auction_id_seq', 1, false);
 
 
 SELECT pg_catalog.setval('public.category_id_seq', 1, false);
@@ -340,6 +412,9 @@ SELECT pg_catalog.setval('public.photo_location_id_seq', 1, false);
 SELECT pg_catalog.setval('public.photo_user_id_seq', 1, false);
 
 
+SELECT pg_catalog.setval('public.provision_id_seq', 1, false);
+
+
 SELECT pg_catalog.setval('public.status_id_seq', 1, false);
 
 
@@ -350,6 +425,10 @@ SELECT pg_catalog.setval('public.user_role_id_seq', 1, false);
 
 
 SELECT pg_catalog.setval('public.user_role_id_seq1', 1, false);
+
+
+ALTER TABLE ONLY public.auction
+    ADD CONSTRAINT auction_pkey PRIMARY KEY (id);
 
 
 ALTER TABLE ONLY public.category
@@ -368,6 +447,14 @@ ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_pkey PRIMARY KEY (id);
 
 
+ALTER TABLE ONLY public.provision
+    ADD CONSTRAINT provision_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY public.provision
+    ADD CONSTRAINT provision_provision_id_on_bank_key UNIQUE (provision_id_on_bank);
+
+
 ALTER TABLE ONLY public.status
     ADD CONSTRAINT status_pkey PRIMARY KEY (id);
 
@@ -384,16 +471,24 @@ ALTER TABLE ONLY public.user_role
     ADD CONSTRAINT user_role_role_key UNIQUE (role);
 
 
+ALTER TABLE ONLY public.auction
+    ADD CONSTRAINT auction_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id);
+
+
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE SET NULL NOT VALID;
+
+ALTER TABLE ONLY public.photo
+    ADD CONSTRAINT photo_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id) ON DELETE SET NULL NOT VALID;
 
-
-ALTER TABLE ONLY public.category
-    ADD CONSTRAINT category_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
 
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
@@ -401,6 +496,10 @@ ALTER TABLE ONLY public.photo
 
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.provision
+    ADD CONSTRAINT provision_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id);
 
 
 ALTER TABLE ONLY public."user"
