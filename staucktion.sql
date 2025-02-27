@@ -40,8 +40,8 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 SET default_tablespace = '';
-SET default_table_access_method = heap;
 
+SET default_table_access_method = heap;
 
 CREATE TABLE public.auction (
     id bigint NOT NULL,
@@ -68,6 +68,30 @@ CREATE SEQUENCE public.auction_id_seq
 ALTER SEQUENCE public.auction_id_seq OWNER TO admin;
 
 ALTER SEQUENCE public.auction_id_seq OWNED BY public.auction.id;
+
+
+CREATE TABLE public.bid (
+    id bigint NOT NULL,
+    auction_id bigint,
+    user_id bigint,
+    amount numeric(15,2) NOT NULL,
+    provision_id_on_bank bigint
+);
+
+
+ALTER TABLE public.bid OWNER TO admin;
+
+CREATE SEQUENCE public.bid_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.bid_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.bid_id_seq OWNED BY public.bid.id;
 
 
 CREATE TABLE public.category (
@@ -139,7 +163,6 @@ CREATE TABLE public.photo (
 
 ALTER TABLE public.photo OWNER TO admin;
 
-
 CREATE SEQUENCE public.photo_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -151,33 +174,6 @@ CREATE SEQUENCE public.photo_id_seq
 ALTER SEQUENCE public.photo_id_seq OWNER TO admin;
 
 ALTER SEQUENCE public.photo_id_seq OWNED BY public.photo.id;
-
-
-
-
-
-CREATE TABLE public.bid (
-    id bigint NOT NULL,
-    auction_id bigint,
-    user_id bigint,
-    amount numeric(15,2) NOT NULL,
-    provision_id_on_bank bigint
-);
-
-
-ALTER TABLE public.bid OWNER TO admin;
-
-CREATE SEQUENCE public.bid_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.bid_id_seq OWNER TO admin;
-
-ALTER SEQUENCE public.bid_id_seq OWNED BY public.bid.id;
 
 
 CREATE TABLE public.status (
@@ -204,7 +200,7 @@ ALTER SEQUENCE public.status_id_seq OWNED BY public.status.id;
 
 CREATE TABLE public."user" (
     id bigint NOT NULL,
-    gmail_id character varying(100), 
+    gmail_id character varying(100),
     username character varying(100) NOT NULL,
     email character varying(100) NOT NULL,
     password character varying(255) NOT NULL,
@@ -233,14 +229,6 @@ ALTER SEQUENCE public.user_id_seq OWNER TO admin;
 ALTER SEQUENCE public.user_id_seq OWNED BY public."user".id;
 
 
-CREATE TABLE public.user_role (
-    id bigint NOT NULL,
-    role character varying(100) NOT NULL
-);
-
-
-ALTER TABLE public.user_role OWNER TO admin;
-
 CREATE SEQUENCE public.user_role_id_seq
     AS integer
     START WITH 1
@@ -255,8 +243,18 @@ ALTER SEQUENCE public.user_role_id_seq OWNER TO admin;
 ALTER SEQUENCE public.user_role_id_seq OWNED BY public."user".role_id;
 
 
+CREATE TABLE public.user_role (
+    id bigint DEFAULT nextval('public.user_role_id_seq'::regclass) NOT NULL,
+    role character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.user_role OWNER TO admin;
 
 ALTER TABLE ONLY public.auction ALTER COLUMN id SET DEFAULT nextval('public.auction_id_seq'::regclass);
+
+
+ALTER TABLE ONLY public.bid ALTER COLUMN id SET DEFAULT nextval('public.bid_id_seq'::regclass);
 
 
 ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
@@ -268,24 +266,17 @@ ALTER TABLE ONLY public.location ALTER COLUMN id SET DEFAULT nextval('public.loc
 ALTER TABLE ONLY public.photo ALTER COLUMN id SET DEFAULT nextval('public.photo_id_seq'::regclass);
 
 
-
-
-
-
-
-ALTER TABLE ONLY public.bid ALTER COLUMN id SET DEFAULT nextval('public.bid_id_seq'::regclass);
-
-
 ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.status_id_seq'::regclass);
 
 
 ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 
 
-ALTER TABLE ONLY public.user_role ALTER COLUMN id SET DEFAULT nextval('public.user_role_id_seq'::regclass);
-
-
 COPY public.auction (id, category_id, status_id, start_time, finish_time, is_deleted, created_at, updated_at) FROM stdin;
+\.
+
+
+COPY public.bid (id, auction_id, user_id, amount, provision_id_on_bank) FROM stdin;
 \.
 
 
@@ -304,10 +295,6 @@ COPY public.location (id, latitude, longitude) FROM stdin;
 
 
 COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
-\.
-
-
-COPY public.bid (id, auction_id, user_id, amount, provision_id_on_bank) FROM stdin;
 \.
 
 
@@ -343,20 +330,16 @@ COPY public.user_role (id, role) FROM stdin;
 SELECT pg_catalog.setval('public.auction_id_seq', 1, false);
 
 
+SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
+
+
 SELECT pg_catalog.setval('public.category_id_seq', 3, false);
 
 
 SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 
 
-
-
 SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
-
-
-
-
-SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
 
 
 SELECT pg_catalog.setval('public.status_id_seq', 10, false);
@@ -364,10 +347,20 @@ SELECT pg_catalog.setval('public.status_id_seq', 10, false);
 
 SELECT pg_catalog.setval('public.user_id_seq', 5, false);
 
+
 SELECT pg_catalog.setval('public.user_role_id_seq', 5, false);
+
 
 ALTER TABLE ONLY public.auction
     ADD CONSTRAINT auction_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY public.bid
+    ADD CONSTRAINT bid_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY public.bid
+    ADD CONSTRAINT bid_provision_id_on_bank_key UNIQUE (provision_id_on_bank);
 
 
 ALTER TABLE ONLY public.category
@@ -384,14 +377,6 @@ ALTER TABLE ONLY public.location
 
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_pkey PRIMARY KEY (id);
-
-
-ALTER TABLE ONLY public.bid
-    ADD CONSTRAINT bid_pkey PRIMARY KEY (id);
-
-
-ALTER TABLE ONLY public.bid
-    ADD CONSTRAINT bid_provision_id_on_bank_key UNIQUE (provision_id_on_bank);
 
 
 ALTER TABLE ONLY public.status
@@ -418,18 +403,28 @@ ALTER TABLE ONLY public.auction
     ADD CONSTRAINT auction_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
 
 
-ALTER TABLE ONLY public.category
-    ADD CONSTRAINT category_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+ALTER TABLE ONLY public.bid
+    ADD CONSTRAINT bid_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.bid
+    ADD CONSTRAINT bid_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
+
 
 ALTER TABLE ONLY public.category
     ADD CONSTRAINT category_location_id_fkey FOREIGN KEY (location_id) REFERENCES public.location(id) ON DELETE SET NULL NOT VALID;
 
 
-ALTER TABLE ONLY public.photo
-    ADD CONSTRAINT photo_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE SET NULL NOT VALID;
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
 
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.photo
+    ADD CONSTRAINT photo_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public.photo
@@ -444,16 +439,11 @@ ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
 
 
-ALTER TABLE ONLY public.bid
-    ADD CONSTRAINT bid_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id) ON DELETE SET NULL NOT VALID;
-
-    
-ALTER TABLE ONLY public.bid
-    ADD CONSTRAINT bid_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
-
-
 ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.user_role(id) ON DELETE SET NULL NOT VALID;
 
+
 ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
