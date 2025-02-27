@@ -290,19 +290,6 @@ ALTER SEQUENCE public.user_role_id_seq OWNER TO admin;
 ALTER SEQUENCE public.user_role_id_seq OWNED BY public."user".role_id;
 
 
-CREATE SEQUENCE public.user_role_id_seq1
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.user_role_id_seq1 OWNER TO admin;
-
-ALTER SEQUENCE public.user_role_id_seq1 OWNED BY public.user_role.id;
-
 
 ALTER TABLE ONLY public.auction ALTER COLUMN id SET DEFAULT nextval('public.auction_id_seq'::regclass);
 
@@ -334,10 +321,7 @@ ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.statu
 ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 
 
-ALTER TABLE ONLY public."user" ALTER COLUMN role_id SET DEFAULT nextval('public.user_role_id_seq'::regclass);
-
-
-ALTER TABLE ONLY public.user_role ALTER COLUMN id SET DEFAULT nextval('public.user_role_id_seq1'::regclass);
+ALTER TABLE ONLY public.user_role ALTER COLUMN id SET DEFAULT nextval('public.user_role_id_seq'::regclass);
 
 
 COPY public.auction (id, category_id, status_id, start_time, finish_time, is_deleted, created_at, updated_at) FROM stdin;
@@ -398,10 +382,10 @@ COPY public.user_role (id, role) FROM stdin;
 SELECT pg_catalog.setval('public.auction_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.category_id_seq', 1, false);
+SELECT pg_catalog.setval('public.category_id_seq', 3, false);
 
 
-SELECT pg_catalog.setval('public.location_id_seq', 1, false);
+SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 
 
 SELECT pg_catalog.setval('public.photo_category_id_seq', 1, false);
@@ -419,17 +403,12 @@ SELECT pg_catalog.setval('public.photo_user_id_seq', 1, false);
 SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.status_id_seq', 1, false);
+SELECT pg_catalog.setval('public.status_id_seq', 10, false);
 
 
-SELECT pg_catalog.setval('public.user_id_seq', 1, false);
+SELECT pg_catalog.setval('public.user_id_seq', 5, false);
 
-
-SELECT pg_catalog.setval('public.user_role_id_seq', 1, false);
-
-
-SELECT pg_catalog.setval('public.user_role_id_seq1', 1, false);
-
+SELECT pg_catalog.setval('public.user_role_id_seq', 5, false);
 
 ALTER TABLE ONLY public.auction
     ADD CONSTRAINT auction_pkey PRIMARY KEY (id);
