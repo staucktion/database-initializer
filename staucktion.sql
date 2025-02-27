@@ -239,7 +239,7 @@ ALTER SEQUENCE public.status_id_seq OWNED BY public.status.id;
 
 CREATE TABLE public."user" (
     id bigint NOT NULL,
-    gmail_id bigint, 
+    gmail_id character varying(100), 
     username character varying(100) NOT NULL,
     email character varying(100) NOT NULL,
     password character varying(255) NOT NULL,
