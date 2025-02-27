@@ -139,18 +139,6 @@ CREATE TABLE public.photo (
 
 ALTER TABLE public.photo OWNER TO admin;
 
-CREATE SEQUENCE public.photo_category_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.photo_category_id_seq OWNER TO admin;
-
-ALTER SEQUENCE public.photo_category_id_seq OWNED BY public.photo.category_id;
-
 
 CREATE SEQUENCE public.photo_id_seq
     START WITH 1
@@ -165,30 +153,7 @@ ALTER SEQUENCE public.photo_id_seq OWNER TO admin;
 ALTER SEQUENCE public.photo_id_seq OWNED BY public.photo.id;
 
 
-CREATE SEQUENCE public.photo_location_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
 
-
-ALTER SEQUENCE public.photo_location_id_seq OWNER TO admin;
-
-ALTER SEQUENCE public.photo_location_id_seq OWNED BY public.photo.location_id;
-
-
-CREATE SEQUENCE public.photo_user_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.photo_user_id_seq OWNER TO admin;
-
-ALTER SEQUENCE public.photo_user_id_seq OWNED BY public.photo.user_id;
 
 
 CREATE TABLE public.bid (
@@ -303,13 +268,9 @@ ALTER TABLE ONLY public.location ALTER COLUMN id SET DEFAULT nextval('public.loc
 ALTER TABLE ONLY public.photo ALTER COLUMN id SET DEFAULT nextval('public.photo_id_seq'::regclass);
 
 
-ALTER TABLE ONLY public.photo ALTER COLUMN user_id SET DEFAULT nextval('public.photo_user_id_seq'::regclass);
 
 
-ALTER TABLE ONLY public.photo ALTER COLUMN location_id SET DEFAULT nextval('public.photo_location_id_seq'::regclass);
 
-
-ALTER TABLE ONLY public.photo ALTER COLUMN category_id SET DEFAULT nextval('public.photo_category_id_seq'::regclass);
 
 
 ALTER TABLE ONLY public.bid ALTER COLUMN id SET DEFAULT nextval('public.bid_id_seq'::regclass);
@@ -388,16 +349,11 @@ SELECT pg_catalog.setval('public.category_id_seq', 3, false);
 SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 
 
-SELECT pg_catalog.setval('public.photo_category_id_seq', 1, false);
 
 
 SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.photo_location_id_seq', 1, false);
-
-
-SELECT pg_catalog.setval('public.photo_user_id_seq', 1, false);
 
 
 SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
