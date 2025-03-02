@@ -122,6 +122,29 @@ ALTER SEQUENCE public.category_id_seq OWNER TO admin;
 ALTER SEQUENCE public.category_id_seq OWNED BY public.category.id;
 
 
+CREATE TABLE public.cron (
+    id bigint NOT NULL,
+    unit character(1) NOT NULL,
+    "interval" integer NOT NULL,
+    last_trigger_time timestamp without time zone
+);
+
+
+ALTER TABLE public.cron OWNER TO admin;
+
+CREATE SEQUENCE public.cron_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.cron_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.cron_id_seq OWNED BY public.cron.id;
+
+
 CREATE TABLE public.location (
     id bigint NOT NULL,
     latitude character varying(100) NOT NULL,
@@ -260,6 +283,9 @@ ALTER TABLE ONLY public.bid ALTER COLUMN id SET DEFAULT nextval('public.bid_id_s
 ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
 
 
+ALTER TABLE ONLY public.cron ALTER COLUMN id SET DEFAULT nextval('public.cron_id_seq'::regclass);
+
+
 ALTER TABLE ONLY public.location ALTER COLUMN id SET DEFAULT nextval('public.location_id_seq'::regclass);
 
 
@@ -283,6 +309,11 @@ COPY public.bid (id, auction_id, user_id, amount, provision_id_on_bank) FROM std
 COPY public.category (id, name, status_id, address, location_id, valid_radius, is_deleted, created_at, updated_at) FROM stdin;
 1	Düden Şelalesi	2	Turkey, Antalya, Düden Park	1	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
 2	Kız Kulesi	2	Turkey, Istanbul, Bosphorus	2	10.0	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+\.
+
+
+COPY public.cron (id, unit, "interval", last_trigger_time) FROM stdin;
+1	s	10	\N
 \.
 
 
@@ -337,6 +368,9 @@ SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
 SELECT pg_catalog.setval('public.category_id_seq', 3, false);
 
 
+SELECT pg_catalog.setval('public.cron_id_seq', 1, true);
+
+
 SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 
 
@@ -370,6 +404,10 @@ ALTER TABLE ONLY public.category
 
 ALTER TABLE ONLY public.category
     ADD CONSTRAINT category_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY public.cron
+    ADD CONSTRAINT cron_pkey PRIMARY KEY (id);
 
 
 ALTER TABLE ONLY public.location
