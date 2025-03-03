@@ -336,10 +336,11 @@ COPY public.status (id, status) FROM stdin;
 4	upload
 5	vote
 6	auction
-7	finish
-8	sold
-9	banned
-10	active
+7	purchasable
+8	finish
+9	sold
+10	banned
+11	active
 \.
 
 
@@ -377,7 +378,7 @@ SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.status_id_seq', 11, false);
+SELECT pg_catalog.setval('public.status_id_seq', 12, false);
 
 
 SELECT pg_catalog.setval('public.user_id_seq', 5, false);
