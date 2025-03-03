@@ -206,6 +206,8 @@ CREATE TABLE public."user" (
     password character varying(255) NOT NULL,
     first_name character varying(100) NOT NULL,
     last_name character varying(100) NOT NULL,
+    tc_identity_no character varying(11),
+    profile_picture text,
     role_id bigint,
     status_id integer,
     is_deleted boolean NOT NULL,
