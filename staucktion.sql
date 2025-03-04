@@ -176,6 +176,7 @@ CREATE TABLE public.photo (
     location_id bigint,
     category_id bigint,
     status_id integer,
+    is_auctionable boolean NOT NULL,
     device_info character varying(255) NOT NULL,
     vote_count integer NOT NULL,
     is_deleted boolean NOT NULL,
@@ -325,7 +326,7 @@ COPY public.location (id, latitude, longitude) FROM stdin;
 \.
 
 
-COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
+COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
 \.
 
 
