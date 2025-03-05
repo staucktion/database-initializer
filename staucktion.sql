@@ -73,6 +73,7 @@ ALTER SEQUENCE public.auction_id_seq OWNED BY public.auction.id;
 CREATE TABLE public.auction_photo (
     id bigint NOT NULL,
     photo_id bigint,
+    auction_id bigint,
     status_id integer NOT NULL,
     last_bid_amount numeric(10,2),
     current_winner_order integer,
@@ -335,7 +336,7 @@ COPY public.auction (id, category_id, status_id, start_time, finish_time, is_del
 \.
 
 
-COPY public.auction_photo (id, photo_id, status_id, last_bid_amount, current_winner_order, winner_user_id_1, winner_user_id_2, winner_user_id_3, created_at, updated_at) FROM stdin;
+COPY public.auction_photo (id, photo_id, auction_id, status_id, last_bid_amount, current_winner_order, winner_user_id_1, winner_user_id_2, winner_user_id_3, created_at, updated_at) FROM stdin;
 \.
 
 
@@ -477,6 +478,10 @@ ALTER TABLE ONLY public.user_role
 
 ALTER TABLE ONLY public.auction
     ADD CONSTRAINT auction_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.auction_photo
+    ADD CONSTRAINT auction_photo_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public.auction_photo
