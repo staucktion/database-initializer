@@ -70,6 +70,33 @@ ALTER SEQUENCE public.auction_id_seq OWNER TO admin;
 ALTER SEQUENCE public.auction_id_seq OWNED BY public.auction.id;
 
 
+CREATE TABLE public.auction_photo (
+    id bigint NOT NULL,
+    photo_id bigint,
+    status_id integer NOT NULL,
+    amount_to_pay numeric(10,2),
+    current_winner_order integer,
+    winner_user_id_1 bigint,
+    winner_user_id_2 bigint,
+    winner_user_id_3 bigint
+);
+
+
+ALTER TABLE public.auction_photo OWNER TO admin;
+
+CREATE SEQUENCE public.auction_photo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.auction_photo_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.auction_photo_id_seq OWNED BY public.auction_photo.id;
+
+
 CREATE TABLE public.category (
     id bigint NOT NULL,
     name character varying(100) NOT NULL,
@@ -254,6 +281,9 @@ ALTER TABLE public.user_role OWNER TO admin;
 ALTER TABLE ONLY public.auction ALTER COLUMN id SET DEFAULT nextval('public.auction_id_seq'::regclass);
 
 
+ALTER TABLE ONLY public.auction_photo ALTER COLUMN id SET DEFAULT nextval('public.auction_photo_id_seq'::regclass);
+
+
 ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
 
 
@@ -273,6 +303,10 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 
 
 COPY public.auction (id, category_id, status_id, start_time, finish_time, is_deleted, created_at, updated_at) FROM stdin;
+\.
+
+
+COPY public.auction_photo (id, photo_id, status_id, amount_to_pay, current_winner_order, winner_user_id_1, winner_user_id_2, winner_user_id_3) FROM stdin;
 \.
 
 
@@ -333,6 +367,9 @@ COPY public.user_role (id, role) FROM stdin;
 SELECT pg_catalog.setval('public.auction_id_seq', 1, false);
 
 
+SELECT pg_catalog.setval('public.auction_photo_id_seq', 1, false);
+
+
 SELECT pg_catalog.setval('public.category_id_seq', 3, false);
 
 
@@ -352,6 +389,10 @@ SELECT pg_catalog.setval('public.user_id_seq', 5, false);
 
 
 SELECT pg_catalog.setval('public.user_role_id_seq', 5, false);
+
+
+ALTER TABLE ONLY public.auction_photo
+    ADD CONSTRAINT auction_photo_pkey PRIMARY KEY (id);
 
 
 ALTER TABLE ONLY public.auction
@@ -396,6 +437,26 @@ ALTER TABLE ONLY public.user_role
 
 ALTER TABLE ONLY public.auction
     ADD CONSTRAINT auction_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.auction_photo
+    ADD CONSTRAINT auction_photo_photo_id_fkey FOREIGN KEY (photo_id) REFERENCES public.photo(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.auction_photo
+    ADD CONSTRAINT auction_photo_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.auction_photo
+    ADD CONSTRAINT auction_photo_winner_user_id_1_fkey FOREIGN KEY (winner_user_id_1) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.auction_photo
+    ADD CONSTRAINT auction_photo_winner_user_id_2_fkey FOREIGN KEY (winner_user_id_2) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.auction_photo
+    ADD CONSTRAINT auction_photo_winner_user_id_3_fkey FOREIGN KEY (winner_user_id_3) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public.auction
