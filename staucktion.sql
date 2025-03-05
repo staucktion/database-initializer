@@ -97,6 +97,30 @@ ALTER SEQUENCE public.auction_photo_id_seq OWNER TO admin;
 ALTER SEQUENCE public.auction_photo_id_seq OWNED BY public.auction_photo.id;
 
 
+CREATE TABLE public.bid (
+    id bigint NOT NULL,
+    bid_amount numeric(10,2) NOT NULL,
+    user_id bigint,
+    auction_photo_id bigint,
+    created_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.bid OWNER TO admin;
+
+CREATE SEQUENCE public.bid_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.bid_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.bid_id_seq OWNED BY public.bid.id;
+
+
 CREATE TABLE public.category (
     id bigint NOT NULL,
     name character varying(100) NOT NULL,
@@ -284,6 +308,9 @@ ALTER TABLE ONLY public.auction ALTER COLUMN id SET DEFAULT nextval('public.auct
 ALTER TABLE ONLY public.auction_photo ALTER COLUMN id SET DEFAULT nextval('public.auction_photo_id_seq'::regclass);
 
 
+ALTER TABLE ONLY public.bid ALTER COLUMN id SET DEFAULT nextval('public.bid_id_seq'::regclass);
+
+
 ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
 
 
@@ -307,6 +334,10 @@ COPY public.auction (id, category_id, status_id, start_time, finish_time, is_del
 
 
 COPY public.auction_photo (id, photo_id, status_id, last_bid_amount, current_winner_order, winner_user_id_1, winner_user_id_2, winner_user_id_3) FROM stdin;
+\.
+
+
+COPY public.bid (id, bid_amount, user_id, auction_photo_id, created_at) FROM stdin;
 \.
 
 
@@ -370,6 +401,9 @@ SELECT pg_catalog.setval('public.auction_id_seq', 1, false);
 SELECT pg_catalog.setval('public.auction_photo_id_seq', 1, false);
 
 
+SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
+
+
 SELECT pg_catalog.setval('public.category_id_seq', 3, false);
 
 
@@ -397,6 +431,10 @@ ALTER TABLE ONLY public.auction_photo
 
 ALTER TABLE ONLY public.auction
     ADD CONSTRAINT auction_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY public.bid
+    ADD CONSTRAINT bid_pkey PRIMARY KEY (id);
 
 
 ALTER TABLE ONLY public.category
@@ -461,6 +499,14 @@ ALTER TABLE ONLY public.auction_photo
 
 ALTER TABLE ONLY public.auction
     ADD CONSTRAINT auction_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.bid
+    ADD CONSTRAINT bid_auction_photo_id_fkey FOREIGN KEY (auction_photo_id) REFERENCES public.auction_photo(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.bid
+    ADD CONSTRAINT bid_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public.category
