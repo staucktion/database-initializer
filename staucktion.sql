@@ -74,7 +74,7 @@ CREATE TABLE public.auction_photo (
     id bigint NOT NULL,
     photo_id bigint,
     status_id integer NOT NULL,
-    amount_to_pay numeric(10,2),
+    last_bid_amount numeric(10,2),
     current_winner_order integer,
     winner_user_id_1 bigint,
     winner_user_id_2 bigint,
@@ -306,7 +306,7 @@ COPY public.auction (id, category_id, status_id, start_time, finish_time, is_del
 \.
 
 
-COPY public.auction_photo (id, photo_id, status_id, amount_to_pay, current_winner_order, winner_user_id_1, winner_user_id_2, winner_user_id_3) FROM stdin;
+COPY public.auction_photo (id, photo_id, status_id, last_bid_amount, current_winner_order, winner_user_id_1, winner_user_id_2, winner_user_id_3) FROM stdin;
 \.
 
 
