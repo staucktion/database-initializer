@@ -385,10 +385,10 @@ COPY public.status (id, status) FROM stdin;
 
 
 COPY public."user" (id, gmail_id, username, email, password, first_name, last_name, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
-1	\N	admin_user	admin@gmail.com	secret	Admin	Admin	1	9	f	2025-01-16 09:00:00	2025-01-16 09:00:00
-2	\N	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	9	f	2025-01-16 09:30:00	2025-01-16 09:30:00
-3	\N	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	9	f	2025-01-16 10:00:00	2025-01-16 10:00:00
-4	\N	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	9	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+1	\N	admin_user	admin@gmail.com	secret	Admin	Admin	1	11	f	2025-01-16 09:00:00	2025-01-16 09:00:00
+2	\N	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	11	f	2025-01-16 09:30:00	2025-01-16 09:30:00
+3	\N	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	11	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	\N	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	11	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
