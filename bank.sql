@@ -173,7 +173,7 @@ COPY public.auditlog (id, action, performed_at) FROM stdin;
 
 
 COPY public.card (id, account_id, number, expiration_date, cvv) FROM stdin;
-1	1	1234567890123456	12/28	123
+1	1	1234567890123456	12/34	123
 2	2	4539187690234512	04/29	678
 3	2	5276903421876543	01/30	456
 4	3	6011472890318427	02/28	890
