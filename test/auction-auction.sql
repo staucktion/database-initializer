@@ -388,8 +388,9 @@ COPY public.status (id, status) FROM stdin;
 7	purchasable
 8	finish
 9	sold
-10	banned
-11	active
+10	wait_purchase_after_auction
+11	banned
+12	active
 \.
 
 
@@ -430,7 +431,7 @@ SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.status_id_seq', 12, false);
+SELECT pg_catalog.setval('public.status_id_seq', 13, false);
 
 
 SELECT pg_catalog.setval('public.user_id_seq', 5, true);
