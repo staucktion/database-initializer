@@ -342,7 +342,7 @@ COPY public.auction (id, category_id, status_id, start_time, finish_time, is_del
 
 
 COPY public.auction_photo (id, photo_id, auction_id, status_id, last_bid_amount, start_time, finish_time, current_winner_order, winner_user_id_1, winner_user_id_2, winner_user_id_3, created_at, updated_at) FROM stdin;
-1	3	1	6	600.00	2025-03-09 13:58:40	2025-03-09 13:58:50	\N	\N	\N	\N	2025-03-09 13:58:40	2025-03-09 14:03:40
+1	3	1	6	800.00	2025-03-09 13:58:40	2025-03-09 13:58:50	\N	\N	\N	\N	2025-03-09 13:58:40	2025-03-09 14:03:40
 \.
 
 
