@@ -347,9 +347,9 @@ COPY public.auction_photo (id, photo_id, auction_id, status_id, last_bid_amount,
 
 
 COPY public.bid (bid_amount, user_id, auction_photo_id, created_at) FROM stdin;
-700.00	1	1	2025-03-09 14:03:40
-800.00	2	1	2025-03-09 14:03:40
-600.00	3	1	2025-03-09 14:03:40
+700.00	1	2	2025-03-09 14:03:40
+800.00	2	2	2025-03-09 14:03:40
+600.00	3	2	2025-03-09 14:03:40
 \.
 
 
@@ -371,10 +371,10 @@ COPY public.location (id, latitude, longitude) FROM stdin;
 \.
 
 
-COPY public.photo (file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
-2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	\N	1	1	2	t	deviceInfo	10	f	2025-03-04 11:18:10.879	2025-03-04 11:53:00
-2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	\N	1	1	2	t	deviceInfo	50	f	2025-03-04 11:18:10.879	2025-03-04 11:53:00
-2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	\N	1	1	2	t	deviceInfo	100	f	2025-03-04 11:18:10.879	2025-03-04 11:53:00
+COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
+3	2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	1	1	1	6	t	deviceInfo	100	f	2025-03-04 11:18:10.879	2025-03-09 14:29:40
+2	2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	1	1	1	7	t	deviceInfo	50	f	2025-03-04 11:18:10.879	2025-03-09 14:29:40
+1	2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	1	1	1	7	t	deviceInfo	10	f	2025-03-04 11:18:10.879	2025-03-09 14:29:40
 \.
 
 
@@ -394,11 +394,11 @@ COPY public.status (id, status) FROM stdin;
 \.
 
 
-COPY public."user" (id, gmail_id, username, email, password, first_name, last_name, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
-1	\N	admin_user	admin@gmail.com	secret	Admin	Admin	1	11	f	2025-01-16 09:00:00	2025-01-16 09:00:00
-2	\N	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	11	f	2025-01-16 09:30:00	2025-01-16 09:30:00
-3	\N	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	11	f	2025-01-16 10:00:00	2025-01-16 10:00:00
-4	\N	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	11	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+COPY public."user" (id, gmail_id, username, email, password, first_name, last_name, tc_identity_no, profile_picture, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
+1	\N	admin_user	admin@gmail.com	secret	Admin	Admin	\N	\N	1	11	f	2025-01-16 09:00:00	2025-01-16 09:00:00
+2	\N	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	\N	\N	2	11	f	2025-01-16 09:30:00	2025-01-16 09:30:00
+3	\N	company_user	company@gmail.com	secret	Ahmett	Oğuzz	\N	\N	3	11	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	\N	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	\N	\N	4	11	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
@@ -416,7 +416,7 @@ SELECT pg_catalog.setval('public.auction_id_seq', 1, true);
 SELECT pg_catalog.setval('public.auction_photo_id_seq', 1, true);
 
 
-SELECT pg_catalog.setval('public.bid_id_seq', 1, true);
+SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
 
 
 SELECT pg_catalog.setval('public.category_id_seq', 3, false);
@@ -434,7 +434,7 @@ SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
 SELECT pg_catalog.setval('public.status_id_seq', 13, false);
 
 
-SELECT pg_catalog.setval('public.user_id_seq', 5, true);
+SELECT pg_catalog.setval('public.user_id_seq', 5, false);
 
 
 SELECT pg_catalog.setval('public.user_role_id_seq', 5, false);
