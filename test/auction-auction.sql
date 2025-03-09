@@ -337,14 +337,19 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 
 
 COPY public.auction (id, category_id, status_id, start_time, finish_time, is_deleted, created_at, updated_at) FROM stdin;
+1	1	6	2025-03-09 13:58:30	2025-03-09 13:58:40	f	2025-03-09 13:58:30	2025-03-09 13:58:40
 \.
 
 
 COPY public.auction_photo (id, photo_id, auction_id, status_id, last_bid_amount, start_time, finish_time, current_winner_order, winner_user_id_1, winner_user_id_2, winner_user_id_3, created_at, updated_at) FROM stdin;
+1	3	1	6	600.00	2025-03-09 13:58:40	2025-03-09 13:58:50	\N	\N	\N	\N	2025-03-09 13:58:40	2025-03-09 14:03:40
 \.
 
 
-COPY public.bid (id, bid_amount, user_id, auction_photo_id, created_at) FROM stdin;
+COPY public.bid (bid_amount, user_id, auction_photo_id, created_at) FROM stdin;
+700.00	1	1	2025-03-09 14:03:40
+800.00	2	1	2025-03-09 14:03:40
+600.00	3	1	2025-03-09 14:03:40
 \.
 
 
@@ -404,13 +409,13 @@ COPY public.user_role (id, role) FROM stdin;
 \.
 
 
-SELECT pg_catalog.setval('public.auction_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auction_id_seq', 1, true);
 
 
-SELECT pg_catalog.setval('public.auction_photo_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auction_photo_id_seq', 1, true);
 
 
-SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
+SELECT pg_catalog.setval('public.bid_id_seq', 1, true);
 
 
 SELECT pg_catalog.setval('public.category_id_seq', 3, false);
@@ -428,7 +433,7 @@ SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
 SELECT pg_catalog.setval('public.status_id_seq', 12, false);
 
 
-SELECT pg_catalog.setval('public.user_id_seq', 5, false);
+SELECT pg_catalog.setval('public.user_id_seq', 5, true);
 
 
 SELECT pg_catalog.setval('public.user_role_id_seq', 5, false);
