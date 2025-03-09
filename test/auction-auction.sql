@@ -347,9 +347,9 @@ COPY public.auction_photo (id, photo_id, auction_id, status_id, last_bid_amount,
 
 
 COPY public.bid (bid_amount, user_id, auction_photo_id, created_at) FROM stdin;
-700.00	1	2	2025-03-09 14:03:40
-800.00	2	2	2025-03-09 14:03:40
-600.00	3	2	2025-03-09 14:03:40
+700.00	1	1	2025-03-09 14:03:40
+800.00	2	1	2025-03-09 14:03:40
+600.00	3	1	2025-03-09 14:03:40
 \.
 
 
