@@ -232,6 +232,52 @@ ALTER SEQUENCE public.photo_id_seq OWNER TO admin;
 ALTER SEQUENCE public.photo_id_seq OWNED BY public.photo.id;
 
 
+CREATE TABLE public.photographer_payment (
+    id bigint NOT NULL,
+    user_id bigint,
+    status_id bigint,
+    payment_amount numeric(10,2) NOT NULL
+);
+
+
+ALTER TABLE public.photographer_payment OWNER TO admin;
+
+CREATE SEQUENCE public.photographer_payment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.photographer_payment_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.photographer_payment_id_seq OWNED BY public.photographer_payment.id;
+
+
+CREATE TABLE public.purchased_photo (
+    id bigint NOT NULL,
+    photo_id bigint,
+    user_id bigint,
+    payment_amount numeric(10,2) NOT NULL
+);
+
+
+ALTER TABLE public.purchased_photo OWNER TO admin;
+
+CREATE SEQUENCE public.purchased_photo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.purchased_photo_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.purchased_photo_id_seq OWNED BY public.purchased_photo.id;
+
+
 CREATE TABLE public.status (
     id integer NOT NULL,
     status character varying(100) NOT NULL
@@ -355,6 +401,12 @@ ALTER TABLE ONLY public.location ALTER COLUMN id SET DEFAULT nextval('public.loc
 ALTER TABLE ONLY public.photo ALTER COLUMN id SET DEFAULT nextval('public.photo_id_seq'::regclass);
 
 
+ALTER TABLE ONLY public.photographer_payment ALTER COLUMN id SET DEFAULT nextval('public.photographer_payment_id_seq'::regclass);
+
+
+ALTER TABLE ONLY public.purchased_photo ALTER COLUMN id SET DEFAULT nextval('public.purchased_photo_id_seq'::regclass);
+
+
 ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.status_id_seq'::regclass);
 
 
@@ -403,6 +455,15 @@ COPY public.photo (id, file_path, title, user_id, auction_id, location_id, categ
 3	2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	1	1	1	10	t	deviceInfo	100	f	2025-03-04 11:18:10.879	2025-03-10 18:56:50
 2	2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	1	1	1	8	t	deviceInfo	50	f	2025-03-04 11:18:10.879	2025-03-10 18:56:50
 1	2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	1	1	1	8	t	deviceInfo	10	f	2025-03-04 11:18:10.879	2025-03-10 18:56:50
+\.
+
+
+
+COPY public.photographer_payment (id, user_id, status_id, payment_amount) FROM stdin;
+\.
+
+
+COPY public.purchased_photo (id, photo_id, user_id, payment_amount) FROM stdin;
 \.
 
 
@@ -465,6 +526,12 @@ SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 SELECT pg_catalog.setval('public.photo_id_seq', 4, false);
 
 
+SELECT pg_catalog.setval('public.photographer_payment_id_seq', 1, false);
+
+
+SELECT pg_catalog.setval('public.purchased_photo_id_seq', 1, false);
+
+
 SELECT pg_catalog.setval('public.status_id_seq', 13, false);
 
 
@@ -507,6 +574,14 @@ ALTER TABLE ONLY public.location
 
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY public.photographer_payment
+    ADD CONSTRAINT photographer_payment_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY public.purchased_photo
+    ADD CONSTRAINT purchased_photo_pkey PRIMARY KEY (id);
 
 
 ALTER TABLE ONLY public.status
@@ -595,6 +670,22 @@ ALTER TABLE ONLY public.photo
 
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.photographer_payment
+    ADD CONSTRAINT photographer_payment_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.photographer_payment
+    ADD CONSTRAINT photographer_payment_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.purchased_photo
+    ADD CONSTRAINT purchased_photo_photo_id_fkey FOREIGN KEY (photo_id) REFERENCES public.photo(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.purchased_photo
+    ADD CONSTRAINT purchased_photo_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public."user"
