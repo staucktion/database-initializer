@@ -498,7 +498,7 @@ SELECT pg_catalog.setval('public.auction_photo_id_seq', 1, false);
 SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.category_id_seq', 3, false);
+SELECT pg_catalog.setval('public.category_id_seq', 2, false);
 
 
 SELECT pg_catalog.setval('public.cron_id_seq', 1, true);
@@ -507,7 +507,7 @@ SELECT pg_catalog.setval('public.cron_id_seq', 1, true);
 SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 
 
-SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
+SELECT pg_catalog.setval('public.photo_id_seq', 4, false);
 
 
 SELECT pg_catalog.setval('public.photographer_payment_id_seq', 1, false);
