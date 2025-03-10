@@ -311,6 +311,7 @@ ALTER TABLE public.user_role OWNER TO admin;
 
 CREATE TABLE public.vote (
     id bigint NOT NULL,
+    auction_id bigint,
     user_id bigint,
     photo_id bigint,
     status_id integer,
@@ -437,7 +438,7 @@ COPY public.user_role (id, role) FROM stdin;
 \.
 
 
-COPY public.vote (id, user_id, photo_id, status_id, transfer_amount) FROM stdin;
+COPY public.vote (id, auction_id, user_id, photo_id, status_id, transfer_amount) FROM stdin;
 \.
 
 
@@ -600,6 +601,10 @@ ALTER TABLE ONLY public."user"
 
 ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.vote
+    ADD CONSTRAINT vote_auction_id_fkey FOREIGN KEY (auction_id) REFERENCES public.auction(id) ON DELETE SET NULL NOT VALID;
 
 
 ALTER TABLE ONLY public.vote
