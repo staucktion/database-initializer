@@ -309,6 +309,30 @@ CREATE TABLE public.user_role (
 
 ALTER TABLE public.user_role OWNER TO admin;
 
+CREATE TABLE public.vote (
+    id bigint NOT NULL,
+    user_id bigint,
+    photo_id bigint,
+    status_id integer,
+    transfer_amount numeric(10,2)
+);
+
+
+ALTER TABLE public.vote OWNER TO admin;
+
+CREATE SEQUENCE public.vote_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.vote_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.vote_id_seq OWNED BY public.vote.id;
+
+
 ALTER TABLE ONLY public.auction ALTER COLUMN id SET DEFAULT nextval('public.auction_id_seq'::regclass);
 
 
@@ -334,6 +358,9 @@ ALTER TABLE ONLY public.status ALTER COLUMN id SET DEFAULT nextval('public.statu
 
 
 ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
+
+
+ALTER TABLE ONLY public.vote ALTER COLUMN id SET DEFAULT nextval('public.vote_id_seq'::regclass);
 
 
 COPY public.auction (id, category_id, status_id, start_time, finish_time, is_deleted, created_at, updated_at) FROM stdin;
@@ -389,11 +416,11 @@ COPY public.status (id, status) FROM stdin;
 \.
 
 
-COPY public."user" (id, gmail_id, username, email, password, first_name, last_name, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
-1	\N	admin_user	admin@gmail.com	secret	Admin	Admin	1	11	f	2025-01-16 09:00:00	2025-01-16 09:00:00
-2	\N	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	2	11	f	2025-01-16 09:30:00	2025-01-16 09:30:00
-3	\N	company_user	company@gmail.com	secret	Ahmett	Oğuzz	3	11	f	2025-01-16 10:00:00	2025-01-16 10:00:00
-4	\N	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	4	11	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+COPY public."user" (id, gmail_id, username, email, password, first_name, last_name, tc_identity_no, profile_picture, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
+1	\N	admin_user	admin@gmail.com	secret	Admin	Admin	\N	\N	1	11	f	2025-01-16 09:00:00	2025-01-16 09:00:00
+2	\N	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	\N	\N	2	11	f	2025-01-16 09:30:00	2025-01-16 09:30:00
+3	\N	company_user	company@gmail.com	secret	Ahmett	Oğuzz	\N	\N	3	11	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	\N	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	\N	\N	4	11	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
@@ -402,6 +429,10 @@ COPY public.user_role (id, role) FROM stdin;
 2	photographer
 3	company
 4	validator
+\.
+
+
+COPY public.vote (id, user_id, photo_id, status_id, transfer_amount) FROM stdin;
 \.
 
 
@@ -433,6 +464,9 @@ SELECT pg_catalog.setval('public.user_id_seq', 5, false);
 
 
 SELECT pg_catalog.setval('public.user_role_id_seq', 5, false);
+
+
+SELECT pg_catalog.setval('public.vote_id_seq', 1, false);
 
 
 ALTER TABLE ONLY public.auction_photo
@@ -481,6 +515,10 @@ ALTER TABLE ONLY public.user_role
 
 ALTER TABLE ONLY public.user_role
     ADD CONSTRAINT user_role_role_key UNIQUE (role);
+
+
+ALTER TABLE ONLY public.vote
+    ADD CONSTRAINT vote_pkey PRIMARY KEY (id);
 
 
 ALTER TABLE ONLY public.auction
@@ -557,5 +595,17 @@ ALTER TABLE ONLY public."user"
 
 ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.vote
+    ADD CONSTRAINT vote_photo_id_fkey FOREIGN KEY (photo_id) REFERENCES public.photo(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.vote
+    ADD CONSTRAINT vote_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.vote
+    ADD CONSTRAINT vote_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL NOT VALID;
 
 
