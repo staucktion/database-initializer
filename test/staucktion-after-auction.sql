@@ -235,7 +235,7 @@ ALTER SEQUENCE public.photo_id_seq OWNED BY public.photo.id;
 CREATE TABLE public.photographer_payment (
     id bigint NOT NULL,
     user_id bigint,
-    status_id bigint,
+    status_id integer,
     payment_amount numeric(10,2) NOT NULL
 );
 
