@@ -199,6 +199,33 @@ ALTER SEQUENCE public.location_id_seq OWNER TO admin;
 ALTER SEQUENCE public.location_id_seq OWNED BY public.location.id;
 
 
+CREATE TABLE public.notification (
+    id bigint NOT NULL,
+    sent_by_user_id bigint NOT NULL,
+    sent_to_user_id bigint NOT NULL,
+    type character varying(255) NOT NULL,
+    message character varying(255) NOT NULL,
+    seen_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.notification OWNER TO admin;
+
+CREATE SEQUENCE public.notification_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.notification_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.notification_id_seq OWNED BY public.notification.id;
+
+
 CREATE TABLE public.photo (
     id bigint NOT NULL,
     file_path character varying(100),
@@ -211,6 +238,8 @@ CREATE TABLE public.photo (
     is_auctionable boolean NOT NULL,
     device_info character varying(255) NOT NULL,
     vote_count integer NOT NULL,
+    purchase_now_price numeric(10,2),
+    purchased_at timestamp without time zone,
     is_deleted boolean NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -398,6 +427,9 @@ ALTER TABLE ONLY public.cron ALTER COLUMN id SET DEFAULT nextval('public.cron_id
 ALTER TABLE ONLY public.location ALTER COLUMN id SET DEFAULT nextval('public.location_id_seq'::regclass);
 
 
+ALTER TABLE ONLY public.notification ALTER COLUMN id SET DEFAULT nextval('public.notification_id_seq'::regclass);
+
+
 ALTER TABLE ONLY public.photo ALTER COLUMN id SET DEFAULT nextval('public.photo_id_seq'::regclass);
 
 
@@ -447,7 +479,11 @@ COPY public.location (id, latitude, longitude) FROM stdin;
 \.
 
 
-COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
+COPY public.notification (id, sent_by_user_id, sent_to_user_id, type, message, created_at, updated_at, seen_at) FROM stdin;
+\.
+
+
+COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, purchase_now_price, is_deleted, created_at, updated_at) FROM stdin;
 \.
 
 
@@ -513,6 +549,9 @@ SELECT pg_catalog.setval('public.cron_id_seq', 1, true);
 SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 
 
+SELECT pg_catalog.setval('public.notification_id_seq', 1, false);
+
+
 SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
 
 
@@ -562,6 +601,10 @@ ALTER TABLE ONLY public.location
     ADD CONSTRAINT location_pkey PRIMARY KEY (id);
 
 
+ALTER TABLE ONLY public.notification
+    ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
+
+
 ALTER TABLE ONLY public.photo
     ADD CONSTRAINT photo_pkey PRIMARY KEY (id);
 
@@ -592,6 +635,9 @@ ALTER TABLE ONLY public.user_role
 
 ALTER TABLE ONLY public.vote
     ADD CONSTRAINT vote_pkey PRIMARY KEY (id);
+
+
+CREATE INDEX notification_sent_to_user_id_seen_at_idx ON public.notification USING btree (sent_to_user_id, seen_at);
 
 
 ALTER TABLE ONLY public.auction
@@ -640,6 +686,14 @@ ALTER TABLE ONLY public.category
 
 ALTER TABLE ONLY public.category
     ADD CONSTRAINT category_status_id_fkey FOREIGN KEY (status_id) REFERENCES public.status(id) ON DELETE SET NULL NOT VALID;
+
+
+ALTER TABLE ONLY public.notification
+    ADD CONSTRAINT notification_sent_by_user_id_fkey FOREIGN KEY (sent_by_user_id) REFERENCES public."user"(id);
+
+
+ALTER TABLE ONLY public.notification
+    ADD CONSTRAINT notification_sent_to_user_id_fkey FOREIGN KEY (sent_to_user_id) REFERENCES public."user"(id);
 
 
 ALTER TABLE ONLY public.photo
