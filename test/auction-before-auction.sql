@@ -430,7 +430,6 @@ COPY public.bid (id, bid_amount, user_id, auction_photo_id, created_at) FROM std
 
 COPY public.category (id, name, status_id, address, location_id, valid_radius, is_deleted, created_at, updated_at) FROM stdin;
 1	Düden Şelalesi	2	Turkey, Antalya, Düden Park	1	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
-2	Kız Kulesi	2	Turkey, Istanbul, Bosphorus	2	10.0	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
@@ -447,15 +446,10 @@ COPY public.location (id, latitude, longitude) FROM stdin;
 \.
 
 
-COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
-\.
-
-
-COPY public.photographer_payment (id, user_id, status_id, payment_amount) FROM stdin;
-\.
-
-
-COPY public.purchased_photo (id, photo_id, user_id, payment_amount) FROM stdin;
+COPY public.photo (file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, is_deleted, created_at, updated_at) FROM stdin;
+2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	\N	1	1	2	t	deviceInfo	10	f	2025-03-04 11:18:10.879	2025-03-04 11:53:00
+2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	\N	1	1	2	t	deviceInfo	50	f	2025-03-04 11:18:10.879	2025-03-04 11:53:00
+2025-03-04-14-18-357.jpg	2025-03-04-14-18-357.jpg	1	\N	1	1	2	t	deviceInfo	100	f	2025-03-04 11:18:10.879	2025-03-04 11:53:00
 \.
 
 
@@ -504,7 +498,7 @@ SELECT pg_catalog.setval('public.auction_photo_id_seq', 1, false);
 SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.category_id_seq', 3, false);
+SELECT pg_catalog.setval('public.category_id_seq', 2, false);
 
 
 SELECT pg_catalog.setval('public.cron_id_seq', 1, true);
@@ -513,7 +507,7 @@ SELECT pg_catalog.setval('public.cron_id_seq', 1, true);
 SELECT pg_catalog.setval('public.location_id_seq', 5, false);
 
 
-SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
+SELECT pg_catalog.setval('public.photo_id_seq', 4, false);
 
 
 SELECT pg_catalog.setval('public.photographer_payment_id_seq', 1, false);
