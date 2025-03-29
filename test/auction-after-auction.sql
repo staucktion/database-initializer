@@ -535,8 +535,8 @@ COPY public.user_role (id, role) FROM stdin;
 
 
 COPY public.vote (id, auction_id, user_id, photo_id, status_id, transfer_amount) FROM stdin;
-1	1	1	1	1	\N
-2	1	2	1	1	\N
+1	1	1	3	1	\N
+2	1	2	3	1	\N
 \.
 
 
