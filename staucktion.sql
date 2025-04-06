@@ -154,6 +154,30 @@ ALTER SEQUENCE public.category_id_seq OWNER TO admin;
 ALTER SEQUENCE public.category_id_seq OWNED BY public.category.id;
 
 
+CREATE TABLE public.config (
+    id integer NOT NULL,
+    voter_comission_percentage numeric(10,2) NOT NULL,
+    photographer_comission_percentage numeric(10,2) NOT NULL,
+    is_timer_job_active boolean NOT NULL
+);
+
+
+ALTER TABLE public.config OWNER TO admin;
+
+CREATE SEQUENCE public.config_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.config_id_seq OWNER TO admin;
+
+ALTER SEQUENCE public.config_id_seq OWNED BY public.config.id;
+
+
 CREATE TABLE public.cron (
     id bigint NOT NULL,
     unit character(1) NOT NULL,
@@ -421,6 +445,9 @@ ALTER TABLE ONLY public.bid ALTER COLUMN id SET DEFAULT nextval('public.bid_id_s
 ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
 
 
+ALTER TABLE ONLY public.config ALTER COLUMN id SET DEFAULT nextval('public.config_id_seq'::regclass);
+
+
 ALTER TABLE ONLY public.cron ALTER COLUMN id SET DEFAULT nextval('public.cron_id_seq'::regclass);
 
 
@@ -466,6 +493,11 @@ COPY public.category (id, name, status_id, address, location_id, valid_radius, i
 \.
 
 
+COPY public.config (id, voter_comission_percentage, photographer_comission_percentage, is_timer_job_active) FROM stdin;
+1	20.00	50.00	t
+\.
+
+
 COPY public.cron (id, unit, "interval", last_trigger_time) FROM stdin;
 1	s	10	\N
 \.
@@ -479,11 +511,11 @@ COPY public.location (id, latitude, longitude) FROM stdin;
 \.
 
 
-COPY public.notification (id, sent_by_user_id, sent_to_user_id, type, message, created_at, updated_at, seen_at) FROM stdin;
+COPY public.notification (id, sent_by_user_id, sent_to_user_id, type, message, seen_at, created_at, updated_at) FROM stdin;
 \.
 
 
-COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, purchase_now_price, is_deleted, created_at, updated_at) FROM stdin;
+COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, purchase_now_price, purchased_at, is_deleted, created_at, updated_at) FROM stdin;
 \.
 
 
@@ -543,6 +575,9 @@ SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
 SELECT pg_catalog.setval('public.category_id_seq', 3, false);
 
 
+SELECT pg_catalog.setval('public.config_id_seq', 1, true);
+
+
 SELECT pg_catalog.setval('public.cron_id_seq', 1, true);
 
 
@@ -591,6 +626,10 @@ ALTER TABLE ONLY public.category
 
 ALTER TABLE ONLY public.category
     ADD CONSTRAINT category_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY public.config
+    ADD CONSTRAINT config_pkey PRIMARY KEY (id);
 
 
 ALTER TABLE ONLY public.cron
