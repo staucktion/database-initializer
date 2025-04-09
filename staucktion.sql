@@ -502,9 +502,9 @@ COPY public.config (id, voter_comission_percentage, photographer_comission_perce
 
 COPY public.cron (id, unit, "interval", last_trigger_time, name, next_trigger_time) FROM stdin;
 1	d	5	\N	timer-starter	\N
-2	h	6	\N	timer-purchase-after-auction	\N
+2	d	5	\N	timer-vote	\N
 3	d	1	\N	timer-auction	\N
-4	d	5	\N	timer-vote	\N
+4	h	6	\N	timer-purchase-after-auction	\N
 \.
 
 
