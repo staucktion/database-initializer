@@ -158,6 +158,7 @@ CREATE TABLE public.config (
     id integer NOT NULL,
     voter_comission_percentage numeric(10,2) NOT NULL,
     photographer_comission_percentage numeric(10,2) NOT NULL,
+    photos_to_auction_percentage numeric(10,2) NOT NULL,
     is_timer_job_active boolean NOT NULL
 );
 
@@ -495,8 +496,8 @@ COPY public.category (id, name, status_id, address, location_id, valid_radius, i
 \.
 
 
-COPY public.config (id, voter_comission_percentage, photographer_comission_percentage, is_timer_job_active) FROM stdin;
-1	20.00	50.00	t
+COPY public.config (id, voter_comission_percentage, photographer_comission_percentage, photos_to_auction_percentage, is_timer_job_active) FROM stdin;
+1	20.00	50.00	50.00	t
 \.
 
 
