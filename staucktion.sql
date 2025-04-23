@@ -550,10 +550,10 @@ COPY public.status (id, status) FROM stdin;
 
 
 COPY public."user" (id, gmail_id, username, email, password, first_name, last_name, tc_identity_no, profile_picture, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
-1	\N	admin_user	admin@gmail.com	secret	Admin	Admin	\N	\N	1	11	f	2025-01-16 09:00:00	2025-01-16 09:00:00
-2	\N	photographer_user	photographer@gmail.com	secret	Ahmet	Oğuz	\N	\N	2	11	f	2025-01-16 09:30:00	2025-01-16 09:30:00
-3	\N	company_user	company@gmail.com	secret	Ahmett	Oğuzz	\N	\N	3	11	f	2025-01-16 10:00:00	2025-01-16 10:00:00
-4	\N	validator_user	validator@gmail.com	secret	Ahmettt	Oğuzzz	\N	\N	4	11	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+1	\N	Admin User	admin@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Admin	Admin	\N	\N	1	\N	f	2025-01-16 09:00:00	2025-01-16 09:00:00
+2	\N	Photographer User	photographer@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Photographer	User	\N	\N	2	\N	f	2025-01-16 09:30:00	2025-01-16 09:30:00
+3	\N	Company User	company@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Company	User	\N	\N	3	\N	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	\N	Validator User	validator@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Validator	Validator	\N	\N	4	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
