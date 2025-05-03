@@ -554,6 +554,15 @@ COPY public."user" (id, gmail_id, username, email, password, first_name, last_na
 2	\N	Photographer User	photographer@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Photographer	User	\N	\N	2	\N	f	2025-01-16 09:30:00	2025-01-16 09:30:00
 3	\N	Company User	company@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Company	User	\N	\N	3	\N	f	2025-01-16 10:00:00	2025-01-16 10:00:00
 4	\N	Validator User	validator@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Validator	Validator	\N	\N	4	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+5	\N	Auction 1	auction1@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	1	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+6	\N	Auction 2	auction2@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	2	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+7	\N	Auction 3	auction3@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	3	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+8	\N	Purchase 1	purchase1@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	1	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+9	\N	Purchase 2	purchase2@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	2	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+10	\N	Purchase 3	purchase3@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	3	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+11	\N	Vote 1	vote1@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	1	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+12	\N	Vote 2	vote2@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	2	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+13	\N	Vote 3	vote3@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	3	\N	\N	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
