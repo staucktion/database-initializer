@@ -491,8 +491,16 @@ COPY public.bid (id, bid_amount, user_id, auction_photo_id, created_at) FROM std
 
 
 COPY public.category (id, name, status_id, address, location_id, valid_radius, is_deleted, created_at, updated_at) FROM stdin;
-1	Düden Şelalesi	2	Turkey, Antalya, Düden Park	1	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
-2	Kız Kulesi	2	Turkey, Istanbul, Bosphorus	2	10.0	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+1	Eiffel Tower 	2	France, Paris	1	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+2	Santorini	2	Greece, Santorini	2	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+3	Banff National Park	2	Canada, Alberta	3	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	Fushimi Inari Shrine	2	Japan, Kyoto	4	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+5	Hallstatt	2	Austria, Hallstatt	5	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+6	Burj Khalifa	2	UAE, Dubai	6	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+7	Colosseum	2	Italy, Rome	7	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+8	Taj Mahal	2	India, Agra	8	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+9	Pamukkale	2	Turkey, Denizli	9	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+10	CTIS	2	Turkey, Bilkent	10	10.0	f	2025-01-16 10:00:00	2025-01-16 10:00:00
 \.
 
 
@@ -510,10 +518,16 @@ COPY public.cron (id, unit, "interval", last_trigger_time, name, next_trigger_ti
 
 
 COPY public.location (id, latitude, longitude) FROM stdin;
-1	36.9097	30.7375
-2	41.0084	29.0290
-3	41.0085	29.0291
-4	41.0085	29.0291
+1	48.8584	2.2945
+2	36.3932	25.4615
+3	51.4968	-115.9281
+4	34.9671	135.7727
+5	47.5613	13.6493
+6	25.1972	55.2744
+7	41.8902	12.4922
+8	27.1751	78.0421
+9	37.9137	29.1187
+10	39.8714	32.7641
 \.
 
 
@@ -522,6 +536,47 @@ COPY public.notification (id, sent_by_user_id, sent_to_user_id, type, message, s
 
 
 COPY public.photo (id, file_path, title, user_id, auction_id, location_id, category_id, status_id, is_auctionable, device_info, vote_count, purchase_now_price, purchased_at, is_deleted, created_at, updated_at) FROM stdin;
+1	git_eiffel1.jpg	Eiffel Tower	2	\N	1	1	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+2	git_eiffel2.jpg	Eiffel Tower	2	\N	1	1	7	f	Samsung 527D9XQL0 (Android 14)	0	200	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+3	git_eiffel3.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+4	git_eiffel4.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+5	git_eiffel5.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+6	git_eiffel6.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+7	git_eiffel7.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+8	git_eiffel8.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+9	git_eiffel9.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+10	git_eiffel10.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+11	git_eiffel11.jpg	Eiffel Tower	2	\N	1	1	2	t	Iphone14 11VU5PCD8	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+12	git_santorini1.jpg	Santorini	2	\N	2	2	7	f	Xiaomi 23049PCD8G (Android 14)	0	100	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+13	git_santorini2.jpg	Santorini	2	\N	2	2	7	f	Xiaomi 23049PCD8G (Android 14)	0	100	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+14	git_banff1.jpg	Banff	2	\N	3	3	7	f	Xiaomi 23049PCD8G (Android 14)	0	300	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+15	git_banff2.jpg	Banff	2	\N	3	3	7	f	Xiaomi 23049PCD8G (Android 14)	0	100	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+16	git_banff3.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+17	git_banff4.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+18	git_banff5.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+19	git_banff6.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+20	git_banff7.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+21	git_banff8.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+22	git_banff9.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+23	git_banff10.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+24	git_banff11.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+25	git_banff12.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+26	git_banff13.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+27	git_banff14.jpg	Banff	2	\N	3	3	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+28	git_fushimi1.jpg	Fushimi	2	\N	4	4	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+29	git_fushimi2.jpg	Fushimi	2	\N	4	4	2	t	Xiaomi 23049PCD8G (Android 14)	0	\N	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+30	git_hallstatt1.jpg	Hallstatt	2	\N	5	5	7	f	Xiaomi 23049PCD8G (Android 14)	0	300	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+31	git_hallstatt2.jpg	Hallstatt	2	\N	5	5	7	f	Xiaomi 23049PCD8G (Android 14)	0	200	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+32	git_khalifa1.jpg	Khalifa	2	\N	6	6	7	f	Xiaomi 23049PCD8G (Android 14)	0	100	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+33	git_khalifa2.jpg	Khalifa	2	\N	6	6	7	f	Xiaomi 23049PCD8G (Android 14)	0	100	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+34	git_colosseum1.jpg	Colosseum	2	\N	7	7	7	f	Xiaomi 23049PCD8G (Android 14)	0	50	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+35	git_colosseum2.jpg	Colosseum	2	\N	7	7	7	f	Xiaomi 23049PCD8G (Android 14)	0	50	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+36	git_taj1.jpg	Taj	12	\N	2	8	7	f	Xiaomi 23049PCD8G (Android 14)	0	100	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+37	git_taj2.jpg	Taj	13	\N	2	8	7	f	Xiaomi 23049PCD8G (Android 14)	0	200	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+38	git_pamukkale1.jpg	Pamukkale	2	\N	9	9	7	f	Xiaomi 23049PCD8G (Android 14)	0	50	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+39	git_pamukkale2.jpg	Pamukkale	2	\N	9	9	7	f	Xiaomi 23049PCD8G (Android 14)	0	200	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+40	git_ctis1.jpg	CTIS	2	\N	10	10	7	f	Xiaomi 23049PCD8G (Android 14)	0	50	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
+41	git_ctis2.jpg	CTIS	2	\N	10	10	7	f	Xiaomi 23049PCD8G (Android 14)	0	100	\N	f	2025-05-03 21:57:15.2	2025-05-03 21:57:15.2
 \.
 
 
@@ -587,7 +642,7 @@ SELECT pg_catalog.setval('public.auction_photo_id_seq', 1, false);
 SELECT pg_catalog.setval('public.bid_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.category_id_seq', 3, false);
+SELECT pg_catalog.setval('public.category_id_seq', 11, false);
 
 
 SELECT pg_catalog.setval('public.config_id_seq', 1, true);
@@ -596,13 +651,13 @@ SELECT pg_catalog.setval('public.config_id_seq', 1, true);
 SELECT pg_catalog.setval('public.cron_id_seq', 4, true);
 
 
-SELECT pg_catalog.setval('public.location_id_seq', 5, false);
+SELECT pg_catalog.setval('public.location_id_seq', 11, false);
 
 
 SELECT pg_catalog.setval('public.notification_id_seq', 1, false);
 
 
-SELECT pg_catalog.setval('public.photo_id_seq', 1, false);
+SELECT pg_catalog.setval('public.photo_id_seq', 42, false);
 
 
 SELECT pg_catalog.setval('public.photographer_payment_id_seq', 1, false);
