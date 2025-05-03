@@ -614,7 +614,7 @@ SELECT pg_catalog.setval('public.purchased_photo_id_seq', 1, false);
 SELECT pg_catalog.setval('public.status_id_seq', 13, false);
 
 
-SELECT pg_catalog.setval('public.user_id_seq', 5, false);
+SELECT pg_catalog.setval('public.user_id_seq', 14, false);
 
 
 SELECT pg_catalog.setval('public.user_role_id_seq', 5, false);
