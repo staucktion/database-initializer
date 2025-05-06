@@ -361,6 +361,7 @@ CREATE TABLE public."user" (
     gmail_id character varying(100),
     username character varying(100) NOT NULL,
     email character varying(100) NOT NULL,
+    email_verified boolean NOT NULL default false,
     password character varying(255) NOT NULL,
     first_name character varying(100) NOT NULL,
     last_name character varying(100) NOT NULL,
@@ -604,20 +605,20 @@ COPY public.status (id, status) FROM stdin;
 \.
 
 
-COPY public."user" (id, gmail_id, username, email, password, first_name, last_name, tc_identity_no, profile_picture, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
-1	\N	Admin User	admin@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Admin	Admin	\N	https://gravatar.com/avatar/0cd54fff7e0533dbfc333a4eb0cb817d?s=400&d=identicon&r=x	1	\N	f	2025-01-16 09:00:00	2025-01-16 09:00:00
-2	\N	Photographer User	photographer@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Photographer	User	\N	https://gravatar.com/avatar/50139ca6519a0125bd983d290a552524?s=400&d=identicon&r=x	2	\N	f	2025-01-16 09:30:00	2025-01-16 09:30:00
-3	\N	Company User	company@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Company	User	\N	https://gravatar.com/avatar/ce66042e297c35ead95356df002aece7?s=400&d=identicon&r=x	3	\N	f	2025-01-16 10:00:00	2025-01-16 10:00:00
-4	\N	Validator User	validator@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Validator	Validator	\N	https://gravatar.com/avatar/24296862ce0ebafd34a4b4f5ebf05d7a?s=400&d=identicon&r=x	4	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-5	\N	Auction 1	auction1@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	1	\N	https://gravatar.com/avatar/764f3cba4d2ce9fee9bba4395616d738?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-6	\N	Auction 2	auction2@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	2	\N	https://gravatar.com/avatar/4e95255d11df40e8a87f4d6eb84730f4?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-7	\N	Auction 3	auction3@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	3	\N	https://gravatar.com/avatar/44f110cb40ff1fddb1008ec526553c84?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-8	\N	Purchase 1	purchase1@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	1	\N	https://gravatar.com/avatar/f6f154a36eda0f4485411bf7f0914421?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-9	\N	Purchase 2	purchase2@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	2	\N	https://gravatar.com/avatar/26cc7e121419291b988d79d9e9f28359?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-10	\N	Purchase 3	purchase3@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	3	\N	https://gravatar.com/avatar/ecd371efa49b48a26bb41d126bbc7243?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-11	\N	Vote 1	vote1@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	1	\N	https://gravatar.com/avatar/3e5caf166534571be450835a1930efa2?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-12	\N	Vote 2	vote2@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	2	\N	https://gravatar.com/avatar/f74cc42412cba6d4e0c6728e9a695848?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
-13	\N	Vote 3	vote3@staucktion.com.tr	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	3	\N	https://gravatar.com/avatar/ee6c7792bdfe42bbdabd45aebb82518d?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+COPY public."user" (id, gmail_id, username, email, email_verified, password, first_name, last_name, tc_identity_no, profile_picture, role_id, status_id, is_deleted, created_at, updated_at) FROM stdin;
+1	\N	Admin User	admin@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Admin	Admin	\N	https://gravatar.com/avatar/0cd54fff7e0533dbfc333a4eb0cb817d?s=400&d=identicon&r=x	1	\N	f	2025-01-16 09:00:00	2025-01-16 09:00:00
+2	\N	Photographer User	photographer@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Photographer	User	\N	https://gravatar.com/avatar/50139ca6519a0125bd983d290a552524?s=400&d=identicon&r=x	2	\N	f	2025-01-16 09:30:00	2025-01-16 09:30:00
+3	\N	Company User	company@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Company	User	\N	https://gravatar.com/avatar/ce66042e297c35ead95356df002aece7?s=400&d=identicon&r=x	3	\N	f	2025-01-16 10:00:00	2025-01-16 10:00:00
+4	\N	Validator User	validator@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Validator	Validator	\N	https://gravatar.com/avatar/24296862ce0ebafd34a4b4f5ebf05d7a?s=400&d=identicon&r=x	4	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+5	\N	Auction 1	auction1@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	1	\N	https://gravatar.com/avatar/764f3cba4d2ce9fee9bba4395616d738?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+6	\N	Auction 2	auction2@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	2	\N	https://gravatar.com/avatar/4e95255d11df40e8a87f4d6eb84730f4?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+7	\N	Auction 3	auction3@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Auction	3	\N	https://gravatar.com/avatar/44f110cb40ff1fddb1008ec526553c84?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+8	\N	Purchase 1	purchase1@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	1	\N	https://gravatar.com/avatar/f6f154a36eda0f4485411bf7f0914421?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+9	\N	Purchase 2	purchase2@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	2	\N	https://gravatar.com/avatar/26cc7e121419291b988d79d9e9f28359?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+10	\N	Purchase 3	purchase3@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Purchase	3	\N	https://gravatar.com/avatar/ecd371efa49b48a26bb41d126bbc7243?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+11	\N	Vote 1	vote1@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	1	\N	https://gravatar.com/avatar/3e5caf166534571be450835a1930efa2?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+12	\N	Vote 2	vote2@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	2	\N	https://gravatar.com/avatar/f74cc42412cba6d4e0c6728e9a695848?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
+13	\N	Vote 3	vote3@staucktion.com.tr	true	$2b$10$pca7VYVzHkuDgBk.mQ16bOBzRWLnuPFSH4QbNwkeAFiXWzEwh.xPa	Vote	3	\N	https://gravatar.com/avatar/ee6c7792bdfe42bbdabd45aebb82518d?s=400&d=identicon&r=x	\N	\N	f	2025-01-16 10:30:00	2025-01-16 10:30:00
 \.
 
 
